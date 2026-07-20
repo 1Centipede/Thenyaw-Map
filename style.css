@@ -138,6 +138,14 @@ button.small { padding: 6px 10px; font-size: 12px; }
 .muted { color: var(--muted); }
 .small { font-size: 12px; }
 
+.credit {
+  margin: 4px 0 0;
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+  opacity: 0.7;
+}
+
 .pin-list {
   list-style: none;
   margin: 0 0 8px;
