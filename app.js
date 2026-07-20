@@ -77,7 +77,7 @@
   // own zoom — shrinking the actual font-size instead would rasterize it
   // at near-invisible sizes at high zoom (sub-2px), which browsers render
   // as an illegible blur even after scaling back up.
-  const POI_FIXED_PX = 22;
+  const POI_FIXED_PX = 16;
   const POI_BASE_FONT_PX = 14;
   const POI_OFFSET_SCREEN_PX = 6;
 
