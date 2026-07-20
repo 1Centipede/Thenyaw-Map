@@ -94,7 +94,7 @@
   // ---------- pan & zoom ----------
 
   els.viewport.addEventListener("pointerdown", (e) => {
-    if (e.target.closest(".marker")) return;
+    if (e.target.closest(".marker") || e.target.closest(".zoom-controls")) return;
     e.preventDefault();
     dragging = true;
     dragStart = { x: e.clientX, y: e.clientY, tx: view.tx, ty: view.ty };
