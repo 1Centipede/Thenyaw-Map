@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Isle — Live Coordinate Map</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="app">
+
+  <aside class="panel">
+    <h1>The Isle Map</h1>
+
+    <section class="block">
+      <label for="coordInput">Paste coordinates (from TAB menu)</label>
+      <textarea id="coordInput" rows="4" placeholder="e.g. X=12345.6 Y=-7890.1 Z=234.5 Yaw=-123.4"></textarea>
+      <div class="row">
+        <button id="locateBtn" class="primary">Locate</button>
+        <button id="clearInputBtn" class="ghost">Clear</button>
+      </div>
+      <p id="parseStatus" class="status"></p>
+    </section>
+
+    <section class="block">
+      <h2>Current position</h2>
+      <div id="readout" class="readout">
+        <div><span>X</span><b id="roX">—</b></div>
+        <div><span>Y</span><b id="roY">—</b></div>
+        <div><span>Z</span><b id="roZ">—</b></div>
+        <div><span>Yaw</span><b id="roYaw">—</b></div>
+      </div>
+      <div class="row">
+        <button id="pinBtn" class="ghost" disabled>Drop pin here</button>
+        <button id="followBtn" class="ghost" disabled>Center map</button>
+        <button id="clearMarkerBtn" class="ghost" disabled>Clear</button>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>Pins <span id="pinCount" class="muted"></span></h2>
+      <ul id="pinList" class="pin-list"></ul>
+      <button id="clearPinsBtn" class="ghost small">Clear all pins</button>
+    </section>
+
+  </aside>
+
+  <main class="viewport" id="viewport">
+    <div class="canvas" id="canvas">
+      <img id="mapImage" alt="Map" draggable="false" />
+      <div id="markerLayer" class="marker-layer"></div>
+    </div>
+    <div class="zoom-controls">
+      <button id="zoomIn" class="ghost">+</button>
+      <button id="zoomOut" class="ghost">−</button>
+      <button id="zoomReset" class="ghost">Reset</button>
+    </div>
+  </main>
+
+</div>
+
+<script src="calibration-data.js"></script>
+<script src="calibration.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
