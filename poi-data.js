@@ -14,7 +14,7 @@ const POI_DATA = [
   { name: "Mage Forest", x: 210473.9, y: 19678.2 },
   { name: "Hermit Hill", x: 288573.7, y: -310822.5 },
   { name: "Paradise", x: 371139.5, y: -144932.3 },
-  { name: "Sanctuary", x: 390900.9, y: -305.1 },
+  { name: "Sanctuary", x: 364577.5, y: -348.2 },
 
   // Measured directly in-game — exact.
   { name: "Radio Tower", x: 78339.631, y: -240810.336 },

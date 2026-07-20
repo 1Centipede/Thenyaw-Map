@@ -71,22 +71,18 @@
     updatePoiLabelSizes();
   }
 
-  // Area labels stay readable at any zoom: shrink as you zoom in (so they
-  // don't dominate the view up close), grow as you zoom out (so they don't
-  // vanish), but capped on both ends. The text itself is rendered at a
-  // fixed, crisp font-size (see .poi-label-text) and resized purely via a
-  // CSS transform scale — shrinking the actual font-size instead would
-  // rasterize it at near-invisible sizes at high zoom (sub-2px), which
-  // browsers render as an illegible blur even after scaling back up.
-  const POI_MIN_PX = 10;
-  const POI_MAX_PX = 20;
-  const POI_SCALE_K = 3;
+  // Area labels stay a fixed on-screen size regardless of zoom. The text
+  // itself is rendered at a fixed, crisp font-size (see .poi-label-text)
+  // and resized purely via a CSS transform scale to counter the canvas's
+  // own zoom — shrinking the actual font-size instead would rasterize it
+  // at near-invisible sizes at high zoom (sub-2px), which browsers render
+  // as an illegible blur even after scaling back up.
+  const POI_FIXED_PX = 22;
   const POI_BASE_FONT_PX = 14;
   const POI_OFFSET_SCREEN_PX = 6;
 
   function updatePoiLabelSizes() {
-    const screenPx = clamp(POI_SCALE_K / view.scale, POI_MIN_PX, POI_MAX_PX);
-    const labelScale = screenPx / (POI_BASE_FONT_PX * view.scale);
+    const labelScale = POI_FIXED_PX / (POI_BASE_FONT_PX * view.scale);
     const offsetLocalPx = POI_OFFSET_SCREEN_PX / view.scale;
     els.poiLayer.querySelectorAll(".poi-label-text").forEach((el) => {
       el.style.transform = `translateX(${offsetLocalPx}px) scale(${labelScale})`;
