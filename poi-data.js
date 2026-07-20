@@ -8,7 +8,7 @@
 const POI_DATA = [
   { name: "Canyon", x: -288854.5, y: -83413.1 },
   { name: "Triple Rocks", x: -55305.6, y: -91847.8 },
-  { name: "Party Point", x: 31751.4, y: -31751.4 },
+  { name: "Party Plains", x: 31751.4, y: -31751.4 },
   { name: "Valley", x: 61276.3, y: -156901.1 },
   { name: "Swamp", x: 56402.9, y: 133162.4 },
   { name: "Mage Forest", x: 210473.9, y: 19678.2 },
