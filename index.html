@@ -22,6 +22,13 @@
       <p id="parseStatus" class="status"></p>
     </section>
 
+    <section class="block poi-toggle">
+      <label class="toggle-row" for="poiToggle">
+        <input type="checkbox" id="poiToggle" checked />
+        <span>Show area names</span>
+      </label>
+    </section>
+
     <section class="block">
       <h2>Current position</h2>
       <div id="readout" class="readout">
@@ -50,6 +57,7 @@
   <main class="viewport" id="viewport">
     <div class="canvas" id="canvas">
       <img id="mapImage" alt="Map" draggable="false" />
+      <div id="poiLayer" class="poi-layer"></div>
       <div id="markerLayer" class="marker-layer"></div>
     </div>
     <div class="zoom-controls">
@@ -63,6 +71,7 @@
 
 <script src="calibration-data.js"></script>
 <script src="calibration.js"></script>
+<script src="poi-data.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

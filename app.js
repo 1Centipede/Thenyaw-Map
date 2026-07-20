@@ -18,6 +18,8 @@
     canvas: document.getElementById("canvas"),
     mapImage: document.getElementById("mapImage"),
     markerLayer: document.getElementById("markerLayer"),
+    poiLayer: document.getElementById("poiLayer"),
+    poiToggle: document.getElementById("poiToggle"),
     zoomIn: document.getElementById("zoomIn"),
     zoomOut: document.getElementById("zoomOut"),
     zoomReset: document.getElementById("zoomReset"),
@@ -47,6 +49,7 @@
     applyTransform();
     loadPins();
     renderPins();
+    renderPoiLabels();
     if (!calibration) {
       setStatus(els.parseStatus, "This map image has no calibration data — positions can't be shown.", "error");
     }
@@ -65,6 +68,22 @@
 
   function applyTransform() {
     els.canvas.style.transform = `translate(${view.tx}px, ${view.ty}px) scale(${view.scale})`;
+    updatePoiLabelSizes();
+  }
+
+  // Area labels stay readable at any zoom: shrink as you zoom in (so they
+  // don't dominate the view up close), grow as you zoom out (so they don't
+  // vanish), but capped on both ends.
+  const POI_MIN_PX = 10;
+  const POI_MAX_PX = 20;
+  const POI_SCALE_K = 3;
+
+  function updatePoiLabelSizes() {
+    const screenPx = clamp(POI_SCALE_K / view.scale, POI_MIN_PX, POI_MAX_PX);
+    const localPx = screenPx / view.scale;
+    els.poiLayer.querySelectorAll(".poi-label").forEach((el) => {
+      el.style.fontSize = localPx + "px";
+    });
   }
 
   function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
@@ -356,11 +375,45 @@
     }[c]));
   }
 
+  // ---------- area name labels ----------
+
+  function renderPoiLabels() {
+    if (!calibration) return;
+    els.poiLayer.innerHTML = "";
+    const data = typeof POI_DATA !== "undefined" ? POI_DATA : [];
+
+    for (const poi of data) {
+      const { x: px, y: py } = Calibration.worldToPixel(calibration, poi.x, poi.y);
+      const el = document.createElement("div");
+      el.className = "poi-label";
+      el.style.left = px + "px";
+      el.style.top = py + "px";
+      el.textContent = poi.name;
+      els.poiLayer.appendChild(el);
+    }
+    updatePoiLabelSizes();
+  }
+
+  const POI_VISIBLE_KEY = "isleMap.poiVisible";
+
+  function loadPoiToggleState() {
+    const saved = localStorage.getItem(POI_VISIBLE_KEY);
+    const visible = saved === null ? true : saved === "true";
+    els.poiToggle.checked = visible;
+    els.poiLayer.classList.toggle("hidden", !visible);
+  }
+
+  els.poiToggle.addEventListener("change", () => {
+    els.poiLayer.classList.toggle("hidden", !els.poiToggle.checked);
+    localStorage.setItem(POI_VISIBLE_KEY, els.poiToggle.checked);
+  });
+
   // ---------- init ----------
 
   window.addEventListener("resize", () => {
     if (!dragging) { fitToViewport(); applyTransform(); }
   });
 
+  loadPoiToggleState();
   loadImage();
 })();

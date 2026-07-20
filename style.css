@@ -66,6 +66,22 @@ label {
   margin-bottom: 6px;
 }
 
+.toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text);
+}
+.toggle-row input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
 textarea, input[type="number"], input[type="text"] {
   width: 100%;
   background: #0d1216;
@@ -200,7 +216,7 @@ button.small { padding: 6px 10px; font-size: 12px; }
   -webkit-user-drag: none;
 }
 
-.marker-layer {
+.marker-layer, .poi-layer {
   position: absolute;
   top: 0;
   left: 0;
@@ -208,6 +224,17 @@ button.small { padding: 6px 10px; font-size: 12px; }
   height: 100%;
   pointer-events: none;
 }
+
+.poi-label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  font-weight: 700;
+  color: #f2f2f2;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 0 6px rgba(0,0,0,0.7);
+  letter-spacing: 0.3px;
+}
+.poi-layer.hidden { display: none; }
 
 .marker {
   position: absolute;
