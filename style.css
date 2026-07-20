@@ -181,6 +181,7 @@ button.small { padding: 6px 10px; font-size: 12px; }
   overflow: hidden;
   background: #05070a;
   cursor: grab;
+  touch-action: none;
 }
 .viewport.grabbing { cursor: grabbing; }
 
@@ -196,6 +197,7 @@ button.small { padding: 6px 10px; font-size: 12px; }
   display: block;
   user-select: none;
   pointer-events: none;
+  -webkit-user-drag: none;
 }
 
 .marker-layer {

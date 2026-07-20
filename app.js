@@ -73,11 +73,16 @@
 
   els.viewport.addEventListener("pointerdown", (e) => {
     if (e.target.closest(".marker")) return;
+    e.preventDefault();
     dragging = true;
     dragStart = { x: e.clientX, y: e.clientY, tx: view.tx, ty: view.ty };
     els.viewport.classList.add("grabbing");
     els.viewport.setPointerCapture(e.pointerId);
   });
+
+  // Belt and suspenders against the browser's native "drag this image"
+  // gesture hijacking a long pan (draggable="false" isn't always enough).
+  els.mapImage.addEventListener("dragstart", (e) => e.preventDefault());
 
   els.viewport.addEventListener("pointermove", (e) => {
     if (!dragging) return;
