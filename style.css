@@ -228,6 +228,11 @@ button.small { padding: 6px 10px; font-size: 12px; }
 .poi-label {
   position: absolute;
   transform: translate(-50%, -50%);
+}
+
+.poi-label-text {
+  display: inline-block;
+  font-size: 14px;
   white-space: nowrap;
   font-weight: 700;
   color: #f2f2f2;
