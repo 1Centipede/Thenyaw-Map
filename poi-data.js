@@ -6,15 +6,15 @@
 // in-game — good enough for general orientation, but nudge any of these
 // if they look off once you see them live.
 const POI_DATA = [
-  { name: "Canyon", x: -277150.3, y: -96894.6 },
-  { name: "Triple Rocks", x: -37626.2, y: -119922.3 },
-  { name: "Party Point", x: 27880.0, y: -42062.3 },
-  { name: "Valley", x: 61021.5, y: -175031.0 },
+  { name: "Canyon", x: -288854.5, y: -83413.1 },
+  { name: "Triple Rocks", x: -55305.6, y: -91847.8 },
+  { name: "Party Point", x: 31751.4, y: -31751.4 },
+  { name: "Valley", x: 61276.3, y: -156901.1 },
   { name: "Swamp", x: 56402.9, y: 133162.4 },
-  { name: "Mage Forest", x: 205186.7, y: 12561.1 },
-  { name: "Hermit Hill", x: 280523.0, y: -338608.5 },
-  { name: "Paradise", x: 360324.7, y: -162363.1 },
-  { name: "Sanctuary", x: 379456.6, y: -8699.8 },
+  { name: "Mage Forest", x: 210473.9, y: 19678.2 },
+  { name: "Hermit Hill", x: 288573.7, y: -310822.5 },
+  { name: "Paradise", x: 371139.5, y: -144932.3 },
+  { name: "Sanctuary", x: 390900.9, y: -305.1 },
 
   // Measured directly in-game — exact.
   { name: "Radio Tower", x: 78339.631, y: -240810.336 },
