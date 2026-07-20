@@ -7,8 +7,8 @@
 // if they look off once you see them live.
 const POI_DATA = [
   { name: "Canyon", x: -277150.3, y: -96894.6 },
-  { name: "Trips", x: -37626.2, y: -119922.3 },
-  { name: "PP", x: 27880.0, y: -42062.3 },
+  { name: "Triple Rocks", x: -37626.2, y: -119922.3 },
+  { name: "Party Point", x: 27880.0, y: -42062.3 },
   { name: "Valley", x: 61021.5, y: -175031.0 },
   { name: "Swamp", x: 56402.9, y: 133162.4 },
   { name: "Mage Forest", x: 205186.7, y: 12561.1 },
