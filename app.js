@@ -174,11 +174,21 @@
     let t = String(text || "").trim();
     if (!t) return null;
 
-    // Strip thousands-separator commas (comma immediately followed by a
-    // digit, e.g. "56,786.561" -> "56786.561") without touching commas used
-    // to separate fields (which are followed by a space), e.g. the TAB
-    // menu's "56,786.561, 133,412.084, -29,981.839".
-    t = t.replace(/(\d),(?=\d)/g, "$1");
+    if (t.includes(".")) {
+      // US-style numbers: comma = thousands separator (strip it, comma
+      // immediately followed by a digit), period = decimal point.
+      // e.g. "56,786.561, 133,412.084, -29,981.839"
+      t = t.replace(/(\d),(?=\d)/g, "$1");
+    } else if (/\d,\d/.test(t)) {
+      // EU-style numbers: comma = decimal point, space = thousands
+      // separator, no periods anywhere. Field breaks are "comma followed
+      // by whitespace"; a comma glued directly to digits on both sides is
+      // part of the number. e.g. "121 374,825, -208 243,569,  -17 526,565"
+      t = t
+        .split(/,\s+/)
+        .map((chunk) => chunk.replace(/,(?=\d)/g, ".").replace(/(\d)\s+(?=\d)/g, "$1"))
+        .join(", ");
+    }
 
     let x = matchNumber(t, [/\bX\s*[:=]\s*(-?[0-9.]+)/i]);
     let y = matchNumber(t, [/\bY\s*[:=]\s*(-?[0-9.]+)/i]);
