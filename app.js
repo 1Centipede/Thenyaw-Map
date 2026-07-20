@@ -207,6 +207,16 @@
     els.clearMarkerBtn.disabled = false;
   }
 
+  // Paste anywhere on the page (not just in the textarea) to drop the
+  // coordinates straight in and locate — no click required first.
+  document.addEventListener("paste", (e) => {
+    const text = (e.clipboardData || window.clipboardData).getData("text");
+    if (!text) return;
+    e.preventDefault();
+    els.coordInput.value = text;
+    handleLocate();
+  });
+
   els.clearInputBtn.addEventListener("click", () => {
     els.coordInput.value = "";
     setStatus(els.parseStatus, "", null);
