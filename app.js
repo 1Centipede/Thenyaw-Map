@@ -20,6 +20,8 @@
     markerLayer: document.getElementById("markerLayer"),
     poiLayer: document.getElementById("poiLayer"),
     poiToggle: document.getElementById("poiToggle"),
+    migrationLayer: document.getElementById("migrationLayer"),
+    migrationToggle: document.getElementById("migrationToggle"),
     zoomIn: document.getElementById("zoomIn"),
     zoomOut: document.getElementById("zoomOut"),
     zoomReset: document.getElementById("zoomReset"),
@@ -50,6 +52,7 @@
     loadPins();
     renderPins();
     renderPoiLabels();
+    renderMigrationZones();
     if (!calibration) {
       setStatus(els.parseStatus, "This map image has no calibration data — positions can't be shown.", "error");
     }
@@ -69,6 +72,7 @@
   function applyTransform() {
     els.canvas.style.transform = `translate(${view.tx}px, ${view.ty}px) scale(${view.scale})`;
     updatePoiLabelSizes();
+    updateMigrationSizes();
   }
 
   // Area labels stay a fixed on-screen size regardless of zoom. The text
@@ -86,6 +90,25 @@
     const offsetLocalPx = POI_OFFSET_SCREEN_PX / view.scale;
     els.poiLayer.querySelectorAll(".poi-label-text").forEach((el) => {
       el.style.transform = `translateX(${offsetLocalPx}px) scale(${labelScale})`;
+    });
+  }
+
+  // Migration-zone borders and labels live inside the scaled canvas, so
+  // counter-scale them to a fixed on-screen size (same trick as the area
+  // labels) — otherwise the border is hairline-thin when zoomed out and
+  // chunky when zoomed in.
+  const MIGRATION_BORDER_SCREEN_PX = 3;
+  const MIGRATION_LABEL_FIXED_PX = 15;
+  const MIGRATION_BASE_FONT_PX = 14;
+
+  function updateMigrationSizes() {
+    const borderLocalPx = MIGRATION_BORDER_SCREEN_PX / view.scale;
+    const labelScale = MIGRATION_LABEL_FIXED_PX / (MIGRATION_BASE_FONT_PX * view.scale);
+    els.migrationLayer.querySelectorAll(".migration-zone").forEach((el) => {
+      el.style.borderWidth = borderLocalPx + "px";
+    });
+    els.migrationLayer.querySelectorAll(".migration-zone-label").forEach((el) => {
+      el.style.transform = `scale(${labelScale})`;
     });
   }
 
@@ -421,6 +444,54 @@
     localStorage.setItem(POI_VISIBLE_KEY, els.poiToggle.checked);
   });
 
+  // ---------- migration zones ----------
+
+  function renderMigrationZones() {
+    if (!calibration) return;
+    els.migrationLayer.innerHTML = "";
+    const data = typeof MIGRATION_DATA !== "undefined" ? MIGRATION_DATA : [];
+
+    for (const zone of data) {
+      // A world axis-aligned rect maps to a pixel axis-aligned rect (the
+      // calibration is a rotation+scale, no skew), so the bounding box of
+      // the four mapped corners is exact.
+      const corners = [
+        Calibration.worldToPixel(calibration, zone.x1, zone.y1),
+        Calibration.worldToPixel(calibration, zone.x1, zone.y2),
+        Calibration.worldToPixel(calibration, zone.x2, zone.y1),
+        Calibration.worldToPixel(calibration, zone.x2, zone.y2),
+      ];
+      const xs = corners.map((p) => p.x);
+      const ys = corners.map((p) => p.y);
+      const minX = Math.min(...xs), maxX = Math.max(...xs);
+      const minY = Math.min(...ys), maxY = Math.max(...ys);
+
+      const el = document.createElement("div");
+      el.className = "migration-zone";
+      el.style.left = minX + "px";
+      el.style.top = minY + "px";
+      el.style.width = (maxX - minX) + "px";
+      el.style.height = (maxY - minY) + "px";
+      el.innerHTML = `<span class="migration-zone-label">${escapeHtml(zone.name)}</span>`;
+      els.migrationLayer.appendChild(el);
+    }
+    updateMigrationSizes();
+  }
+
+  const MIGRATION_VISIBLE_KEY = "isleMap.migrationVisible";
+
+  function loadMigrationToggleState() {
+    const saved = localStorage.getItem(MIGRATION_VISIBLE_KEY);
+    const visible = saved === "true"; // default off
+    els.migrationToggle.checked = visible;
+    els.migrationLayer.classList.toggle("hidden", !visible);
+  }
+
+  els.migrationToggle.addEventListener("change", () => {
+    els.migrationLayer.classList.toggle("hidden", !els.migrationToggle.checked);
+    localStorage.setItem(MIGRATION_VISIBLE_KEY, els.migrationToggle.checked);
+  });
+
   // ---------- init ----------
 
   window.addEventListener("resize", () => {
@@ -428,5 +499,6 @@
   });
 
   loadPoiToggleState();
+  loadMigrationToggleState();
   loadImage();
 })();

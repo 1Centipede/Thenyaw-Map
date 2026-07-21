@@ -27,6 +27,10 @@
         <input type="checkbox" id="poiToggle" checked />
         <span>Show area names</span>
       </label>
+      <label class="toggle-row" for="migrationToggle">
+        <input type="checkbox" id="migrationToggle" />
+        <span>Show migration zones</span>
+      </label>
     </section>
 
     <section class="block">
@@ -57,8 +61,14 @@
   <main class="viewport" id="viewport">
     <div class="canvas" id="canvas">
       <img id="mapImage" alt="Map" draggable="false" />
+      <div id="migrationLayer" class="migration-layer hidden"></div>
       <div id="poiLayer" class="poi-layer"></div>
       <div id="markerLayer" class="marker-layer"></div>
+    </div>
+    <div class="compass" aria-hidden="true">
+      <span class="compass-n">N</span>
+      <span class="compass-arrow"></span>
+      <span class="compass-s">S</span>
     </div>
     <div class="zoom-controls">
       <button id="zoomIn" class="ghost">+</button>
@@ -72,6 +82,7 @@
 <script src="calibration-data.js"></script>
 <script src="calibration.js"></script>
 <script src="poi-data.js"></script>
+<script src="migration-data.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
