@@ -1,21 +1,15 @@
-// Named area labels shown on the map (toggleable). Each entry is a rough
-// center point for that zone — these don't need pixel precision like the
-// calibration landmarks, just "somewhere in the middle of the area."
-//
-// Positions estimated from a reference map layout rather than measured
-// in-game — good enough for general orientation, but nudge any of these
-// if they look off once you see them live.
+// Named area labels shown on the map (toggleable). Each entry is the world
+// (X, Y) where the label sits — all measured directly in-game, so these are
+// exact placements, not estimates.
 const POI_DATA = [
-  { name: "Canyon", x: -265821.5, y: -83375.4 },
-  { name: "Triple Rocks", x: -78265.4, y: -68741.4 },
-  { name: "Party Plains", x: 31751.4, y: -31751.4 },
-  { name: "Valley", x: 61276.3, y: -156901.1 },
-  { name: "Swamp", x: 56476.1, y: 156306.5 },
-  { name: "Mage Forest", x: 210473.9, y: 19678.2 },
-  { name: "Hermit Hill", x: 288573.7, y: -310822.5 },
-  { name: "Paradise", x: 348106.5, y: -144970.0 },
-  { name: "Sanctuary", x: 364577.5, y: -348.2 },
-
-  // Measured directly in-game — exact.
-  { name: "Radio Tower", x: 78339.631, y: -240810.336 },
+  { name: "Canyon", x: -252074.311, y: -62997.133 },
+  { name: "Triple Rocks", x: -32966.117, y: -59734.789 },
+  { name: "Party Plains", x: 2662.75, y: -3919.094 },
+  { name: "Valley", x: 62109.828, y: -125280.109 },
+  { name: "Swamp", x: 79521.742, y: 151362.453 },
+  { name: "Mage Forest", x: 130441.133, y: 22901.422 },
+  { name: "Hermit Hill", x: 301218.617, y: -267715.344 },
+  { name: "Paradise", x: 323861.211, y: -128726.828 },
+  { name: "Sanctuary", x: 312397.305, y: 499.227 },
+  { name: "Radio Tower", x: 77785.555, y: -240802.854 },
 ];
